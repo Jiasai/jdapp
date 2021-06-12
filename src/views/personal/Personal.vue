@@ -4,7 +4,7 @@
             <div class="personal__pic">
                 <img src="../../assets/images/personalImg.png" alt="">
             </div>
-            <h3 class="personal__name">热心市民李先生</h3>
+            <h3 class="personal__name">热心市民张先生</h3>
             <p class="personal__id">ID: 1069643013</p>
             <div class="personal__data">
                 <div class="personal__data__item">
@@ -63,6 +63,9 @@ import TabBar from '../../components/tabBar/tabBar';
 export default {
     name:'Cart',
     components:{TabBar},
+    setup(){
+        
+    }
 }
 </script>
 <style lang="scss" scoped>
