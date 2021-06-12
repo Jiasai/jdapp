@@ -63,7 +63,7 @@ import TabBar from '../../components/tabBar/tabBar';
 export default {
     name:'Cart',
     components:{TabBar},
-    setup(){
+    setup(props){
         
     }
 }
