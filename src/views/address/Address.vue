@@ -9,6 +9,9 @@
         <div class="addressList__item">
             这是第2个地址
         </div>
+         <div class="addressList__item">
+            这是第3个地址
+        </div>
     </div>
   </div>
 </template>
