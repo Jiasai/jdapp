@@ -4,10 +4,10 @@
     
     <div class="addressList">
         <div class="addressList__item">
-            1个地址
+            这是1个地址
         </div>
         <div class="addressList__item">
-            2个地址
+            这是2个地址
         </div>
        <div class="addressList__item">
             这是第3个地址
