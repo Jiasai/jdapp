@@ -1,12 +1,14 @@
 <template>
   <top-title pageTitle="地址管理" />
   <div class="main">
-    地址管理
+    
     <div class="addressList">
         <div class="addressList__item">
-            
+            这是1个地址
         </div>
-        <div class="addressList__item"></div>
+        <div class="addressList__item">
+            这是第2个地址
+        </div>
     </div>
   </div>
 </template>
