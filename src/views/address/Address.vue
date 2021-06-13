@@ -4,19 +4,13 @@
     
     <div class="addressList">
         <div class="addressList__item">
-            这是1个地址
+            1个地址
         </div>
         <div class="addressList__item">
-            这是第2个地址
+            2个地址
         </div>
-         <div class="addressList__item">
+       <div class="addressList__item">
             这是第3个地址
-        </div>
-        <div class="addressList__item">
-            这是第4个地址
-        </div>
-           <div class="addressList__item">
-            这是第4个地址
         </div>
     </div>
   </div>
