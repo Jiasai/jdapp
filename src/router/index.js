@@ -70,6 +70,11 @@ const routes = [
     beforeEnter(to,from,next){
       localStorage.pathName=to.name;next();
     }
+  },
+  {
+    path: '/address',
+    name: 'Address',
+    component:()=>import(/* webpackChunkName: "address" */'../views/address/Address')
   }
 ]
 
