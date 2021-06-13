@@ -9,12 +9,6 @@
         <div class="addressList__item">
             这是第2个地址
         </div>
-       <div class="addressList__item">
-            这是第3个地址
-        </div>
-           <div class="addressList__item">
-            这是第4个地址
-        </div>
     </div>
   </div>
 </template>
@@ -36,5 +30,8 @@ export default {
   z-index: 10;
   overflow-y: auto;
   background: #f5f5f5;
+  .addressList{
+    margin:.24rem .72rem 0rem;
+  }
 }
 </style>
