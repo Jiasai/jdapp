@@ -31,7 +31,7 @@ export default {
   overflow-y: auto;
   background: #f5f5f5;
   .addressList{
-    margin:.24rem .72rem 0rem;
+    margin:0.12rem 0.36rem 0rem;
     &__item{
       line-height: .72rem;
       background: #fff;

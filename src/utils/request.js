@@ -1,19 +1,15 @@
 import axios from 'axios';
-import { computed } from 'vue';
 
-let timeout = 10000;
-//计算属性：request请求的实例
-const instance = computed(() => {
-    const instance = axios.create({
-        baseURL: 'https://www.fastmock.site/mock/634b1071782bcbcd764f06074951b060/jd',
-        //https://www.fastmock.site/mock/ae8e9031947a302fed5f92425995aa19/jd
-        timeout
-    });
-    return instance;
-})
+const instance = axios.create({
+    baseURL: 'https://www.fastmock.site/mock/634b1071782bcbcd764f06074951b060/jd',
+    //https://www.fastmock.site/mock/ae8e9031947a302fed5f92425995aa19/jd
+    timeout:10000
+});
+
+
 export const get = (url, params = {},) => {
     return new Promise((resolve, reject) => {
-        instance.value.get(url, { params }).then((response) => {
+        instance.get(url, { params }).then((response) => {
             resolve(response.data);
         }, err => {
             reject(err);
@@ -24,7 +20,7 @@ export const get = (url, params = {},) => {
 }
 export const post = (url, data = {}) => {
     return new Promise((resolve, reject) => {
-        instance.value.post(url, data, {
+        instance.post(url, data, {
             headers: {
                 'Content-Type': 'application/json'
             }
