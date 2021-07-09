@@ -29,6 +29,7 @@
 import { reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { post } from "../../utils/request";
+import axios from 'axios';
 import Toast, { useToastEffect } from "../../components/toast/Toast";
 
 //判断是否发送请求
@@ -50,12 +51,17 @@ const useLoginEffect = showToast => {
       
       //验证输入
       if(!isPost(data,showToast)) return;
-
-      const result = await post("/api/user/login", {
+	  const {username,password} = data;
+	  /* const url = '/api/user/login';
+      const result = await post(url, {
         username: data.username,
         password: data.password
-      });
-     
+      }); */
+	  
+	  //本地nodejs自建服务端 localhost:3000
+	  const url = 'http://localhost:3000/user/login';
+	  const result = await post(url,{username,password},{withCredentials:true});
+	      
       if (result?.errno === 0) {
 
         localStorage.isLogin = true;
@@ -65,7 +71,8 @@ const useLoginEffect = showToast => {
         },1600);   
 
       } else {
-        showToast("登录失败",'defeat');
+		const message = result.message || "登录失败";
+        showToast(message,'defeat');
       }
     } catch (err) {
       showToast("请求失败",'defeat');

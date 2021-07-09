@@ -88,7 +88,8 @@ router.beforeEach((to,from,next)=>{
   const {isLogin}=localStorage;
   
   //如果你是登录状态，想访问哪个都可以，直接next()
-  //如果你不是登录状态，并且，不是去直接访问"Login"页面 （是直接访问，就直接 next()正常，并且也不是直接访问 "Register"，我就让你 跳转访问 Login ）
+  //如果你不是登录状态，并且，不是去直接访问"Login"页面 
+  //（是直接访问，就直接 next()正常，并且也不是直接访问 "Register"，我就让你 跳转访问 Login ）
   if(!isLogin&&to.name!=='Login'&&to.name!=='Register'){
     next({name:'Login'});
   }else{
