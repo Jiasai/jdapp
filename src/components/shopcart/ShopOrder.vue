@@ -13,7 +13,7 @@
                 v-for="(proItem, index) in item.products"
                 :key="index"
               >
-                <img :src="proItem.product.img" :alt="proItem.product.name" />
+                <img :src="proItem.product.imgUrl" :alt="proItem.product.name" />
               </div>
             </div>
             <div class="orderContent__right">

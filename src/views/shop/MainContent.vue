@@ -35,7 +35,7 @@ const useGetContentDataEffect = () => {
   const getContentData = async tab => {
     try {
       //请求url
-      const Urlpath=`/api/shop/${id}/products?tab=${tab}`;
+      const Urlpath=`/api/shop/${id}/products?tabs=${tab}`;
       //获取数据
       let result={}
       if(getStorage(Urlpath)){

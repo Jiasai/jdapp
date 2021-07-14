@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://www.fastmock.site/mock/634b1071782bcbcd764f06074951b060/jd',
-	withCredentials:true,
+    //baseURL: 'https://www.fastmock.site/mock/634b1071782bcbcd764f06074951b060/jd',
+	baseURL: 'http://localhost:3000',	
+	withCredentials:true, //允许跨域传递cookie
     //https://www.fastmock.site/mock/ae8e9031947a302fed5f92425995aa19/jd
     timeout:10000
 });
