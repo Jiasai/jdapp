@@ -39,6 +39,7 @@
 import { reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { post } from "../../utils/request";
+import axios from 'axios';
 import Toast, { useToastEffect } from "../../components/toast/Toast";
 
 //判断是否发送请求
@@ -66,15 +67,22 @@ const useRegisterEffect = showToast => {
 
       //验证输入
       if(!isPost(data,showToast)) return;
-
-      const result = await post("/api/user/register", {
+	  
+	  
+     /* const result = await post("/api/user/register", {
         username: data.username,
         password: data.password,
         ensurement: data.ensurement
-      });
-
+      }); */
+			
+	//本地nodejs自建服务端 localhost:3000
+	const url = 'http://localhost:3000/api/user/register';
+	const {username,password} = data;
+	const result = await post(url,{username,password},{withCredentials:true});
+			
+			
       if (result?.errno === 0) {      
-        showToast("提交成功",'success');
+        showToast("注册成功",'success');
         setTimeout(()=>{
           router.push({name:'Login'});
         },2000);       

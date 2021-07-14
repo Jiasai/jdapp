@@ -30,6 +30,7 @@ import { reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { post } from "../../utils/request";
 import axios from 'axios';
+import {setCookie} from "../../utils/cookie.js";
 import Toast, { useToastEffect } from "../../components/toast/Toast";
 
 //判断是否发送请求
@@ -59,12 +60,17 @@ const useLoginEffect = showToast => {
       }); */
 	  
 	  //本地nodejs自建服务端 localhost:3000
-	  const url = 'http://localhost:3000/user/login';
+	  const url = 'http://localhost:3000/api/user/login';
 	  const result = await post(url,{username,password},{withCredentials:true});
 	      
       if (result?.errno === 0) {
+		  
+		 //之所以使用cookie，是因为到期失效（15天），跟服务器保持一致（服务器登录设置的cookie就是15天），
+		 //cookie失效，重新登录，触发服务器重新设置返回cookie
+		 
+		setCookie("isLogin",true,{maxAge:15*24*60*60})////有效期15天,maxAge单位：秒
+		//console.log(getCookieValue("isLogin"));
 
-        localStorage.isLogin = true;
         showToast("登录成功",'success');
         setTimeout(()=>{
           router.push({ name: "Home" });

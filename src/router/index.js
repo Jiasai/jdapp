@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import {getCookieValue} from "../utils/cookie.js";
 
 const routes = [
   {
@@ -16,7 +17,7 @@ const routes = [
     beforeEnter(to,from,next){
       //只有访问Login页面之前执行
       //next意思是只有调用我，逻辑才往下执行
-      const {isLogin} = localStorage;
+      const isLogin = getCookieValue("isLogin");
       isLogin?next({name:'Home'}):next()     
     }
   },
@@ -25,7 +26,7 @@ const routes = [
     name: 'Register',
     component:()=>import(/* webpackChunkName: "register" */'../views/register/Register'),
     beforeEnter(to,from,next){
-      const {isLogin} = localStorage;
+      const isLogin = getCookieValue("isLogin");
       isLogin?next({name:'Home'}):next()    
     }
   },
@@ -85,7 +86,7 @@ const router = createRouter({
 
 //任何路由跳转前，都会执行 beforeEach()
 router.beforeEach((to,from,next)=>{
-  const {isLogin}=localStorage;
+  const isLogin=getCookieValue("isLogin");
   
   //如果你是登录状态，想访问哪个都可以，直接next()
   //如果你不是登录状态，并且，不是去直接访问"Login"页面 
