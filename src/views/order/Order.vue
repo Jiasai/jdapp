@@ -6,6 +6,7 @@
         <template v-for="(item, index) in shopOrderList" :key="index">
              <shop-order :item="item"/>
         </template>
+		<NullData v-if="shopOrderList.length>0?false:true" text="暂无订单数据"/>
      </div>
     <tab-bar />
       <div class="pageMainBg"></div>
@@ -17,14 +18,14 @@ import {get} from '../../utils/request';
 import TopTitle from "../../components/topTitle/TopTitle.vue";
 import TabBar from '../../components/tabBar/tabBar';
 import ShopOrder from "../../components/shopcart/ShopOrder.vue";
-
+import NullData from "../../components/toast/NullData.vue";
 //请求获得订单的店铺shopId的 list
 const useGetShopIdListEffect = () => {
   const shopOrderList=ref([]);
     //发送get请求，拿到订单数据
     const getshopOrderList=async()=>{
       try{
-        const result= await get('/api/order');       
+        const result= await get('/api/order');     
          if (result?.errno === 0&&result?.data?.length) {
            shopOrderList.value = result.data;     
          }
@@ -39,7 +40,7 @@ const useGetShopIdListEffect = () => {
 
 export default {
     name:'Cart',
-    components:{TabBar,TopTitle,ShopOrder},
+    components:{TabBar,TopTitle,ShopOrder,NullData},
     setup(){
         const { shopOrderList,getshopOrderList} = useGetShopIdListEffect();
         const title = `我的订单`;

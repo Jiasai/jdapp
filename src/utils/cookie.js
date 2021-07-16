@@ -23,15 +23,19 @@ const setCookie=(name,value,{maxAge,domain,path,secure}={})=>{
 
 //通过name获取cookie的值
 const getCookieValue=name=>{
+	
 	name = `${encodeURIComponent(name)}`;
-	const theCookie=document.cookie.split('; ');
+
+	const theCookie=document.cookie.split(';');
+
 	const cookieArr=[];
 	for (let valueitem of theCookie) {
-		const [cookieName,cookieValue]=valueitem.split('=');
+		let [cookieName,cookieValue]=valueitem.trim().split('=');
 		if(cookieName === name){
-			return decodeURIComponent(cookieValue);
-		}else{
-			return undefined;
+			cookieValue = decodeURIComponent(cookieValue)
+			if(cookieValue === 'false'){cookieValue=false};
+			if(cookieValue === 'true'){cookieValue=true};
+			return cookieValue;
 		}
 	}	
 	return;	

@@ -30,6 +30,7 @@
                     <span class="iconfont icon-fanhui1"></span>
                 </div>
             </div>
+            <router-link to="/address">
             <div class="menu__item">
                   <div class="menu__item__left">
                 <div class="menu__item__img">
@@ -41,6 +42,7 @@
                     <span class="iconfont icon-fanhui1"></span>
                 </div>
             </div>
+            </router-link>
             <div class="menu__item">
                  <div class="menu__item__left">
                 <div class="menu__item__img">

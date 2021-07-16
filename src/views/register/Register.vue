@@ -7,8 +7,14 @@
       <input
         class="wrapper__input__content"
         placeholder="请输入用户名"
+        @blur="inputBlur"
+        @focus="inputFocus"
         v-model="username"
       />
+      <div v-if="Tishi.inputOK" class="tishiBox">
+        <div v-if="!Tishi.isOK" class="wrapper__input__tishi">用户名已存在<span>，建议使用个人手机号注册</span></div>
+        <div v-if="Tishi.isOK" class="wrapper__input__tishi success">√ 用户名可用</div>
+      </div>
     </div>
     <div class="wrapper__input">
       <input
@@ -36,9 +42,9 @@
 
 <script>
 //主动跳转，用useRouter的 push方法
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs,ref } from "vue";
 import { useRouter } from "vue-router";
-import { post } from "../../utils/request";
+import { post,get } from "../../utils/request";
 import axios from 'axios';
 import Toast, { useToastEffect } from "../../components/toast/Toast";
 
@@ -62,6 +68,29 @@ const useRegisterEffect = showToast => {
     username: "", 
     password: "", 
     ensurement: "" });
+  const Tishi = reactive({
+    isOK:false,
+    inputOK:false
+  })
+  const inputFocus = async()=>{
+    Tishi.inputOK = false;
+  } 
+  const inputBlur = async()=>{
+    try{
+      if(!data.username) return;
+      const url = `/api/user/register/${data.username}`;
+      const result = await get(url);
+      if(result?.errno === 0){
+        Tishi.inputOK = true;
+        Tishi.isOK = true;
+      }else{
+        Tishi.inputOK = true;
+        Tishi.isOK = false;
+      }
+    } catch (err) {
+      showToast("请求失败",'defeat');
+    }
+  }
   const handleRegister = async () => {
     try { 
 
@@ -76,8 +105,9 @@ const useRegisterEffect = showToast => {
       }); */
 			
 	//本地nodejs自建服务端 localhost:3000
-	const url = 'http://localhost:3000/api/user/register';
+	const url = '/api/user/register';
 	const {username,password} = data;
+
 	const result = await post(url,{username,password},{withCredentials:true});
 			
 			
@@ -94,7 +124,7 @@ const useRegisterEffect = showToast => {
     }
   };
   const {username,password,ensurement}=toRefs(data);
-  return { handleRegister, username, password,ensurement};
+  return { handleRegister,Tishi,inputBlur,inputFocus, username, password,ensurement};
 };
 //路由跳转登录页
 const useToLoginEffect = () => {
@@ -110,10 +140,13 @@ export default {
   components: { Toast },
   setup() {
     const { show, toastMessage, showToast,iconstate,showIcon} = useToastEffect();
-    const { handleRegister, username, password,ensurement} = useRegisterEffect(showToast);
+    const { handleRegister,Tishi,inputBlur,inputFocus, username, password,ensurement} = useRegisterEffect(showToast);
     const { handleToLogin } = useToLoginEffect();
     return {
       handleRegister,
+      Tishi,
+      inputBlur,
+      inputFocus,
       username,
       password,
       ensurement,
@@ -147,7 +180,19 @@ export default {
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 0.12rem;
     height: 0.96rem;
-    margin: 0 0.8rem 0.32rem;
+    margin: 0 0.8rem 0.42rem;
+    position: relative;
+    .tishiBox{
+      position: absolute;
+      font-size: .22rem;
+      bottom: -.3rem;
+      left:.04rem;
+    }
+    &__tishi{
+      color:$redColor;
+      span{color:$searchbox-color}
+      &.success{color:green}
+    }   
     &__content {
       width: 100%;
       height: 100%;

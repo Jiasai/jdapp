@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {setCookie} from "./cookie";
 
 const instance = axios.create({
     //baseURL: 'https://www.fastmock.site/mock/634b1071782bcbcd764f06074951b060/jd',
@@ -12,6 +13,7 @@ const instance = axios.create({
 export const get = (url, params = {},) => {
     return new Promise((resolve, reject) => {
         instance.get(url, { params }).then((response) => {
+            if(response.data?.errno === 10003){setCookie("errno","10003")} //设置10003用户校验失败
             resolve(response.data);
         }, err => {
             reject(err);
@@ -27,13 +29,27 @@ export const post = (url, data = {}) => {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
+            if(response.data?.errno === 10003){setCookie("errno","10003")} //设置10003用户校验失败
             resolve(response.data);
         }, err => {
             reject(err);
         })
     });
 }
-
+export const patch = (url, data = {}) => {
+    return new Promise((resolve, reject) => {
+        instance.patch(url, data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if(response.data?.errno === 10003){setCookie("errno","10003")} //设置10003用户校验失败
+            resolve(response.data);
+        }, err => {
+            reject(err);
+        })
+    });
+}
 
 // 设置临时会话存储
 export const setStorage = (key, value) => {

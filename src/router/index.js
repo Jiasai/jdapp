@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import {getCookieValue} from "../utils/cookie.js";
+import {getCookieValue,setCookie} from "../utils/cookie.js";
 
 const routes = [
   {
@@ -76,6 +76,16 @@ const routes = [
     path: '/address',
     name: 'Address',
     component:()=>import(/* webpackChunkName: "address" */'../views/address/Address')
+  },
+  {
+    path: '/address/new',
+    name: 'AddressNew',
+    component:()=>import(/* webpackChunkName: "AddressNew" */'../views/address/AddressNew')
+  },
+  {
+    path: '/address/edit/:id',
+    name: 'AddressEdit',
+    component:()=>import(/* webpackChunkName: "AddressEdit" */'../views/address/AddressEdit')
   }
 ]
 
@@ -86,8 +96,11 @@ const router = createRouter({
 
 //任何路由跳转前，都会执行 beforeEach()
 router.beforeEach((to,from,next)=>{
+
+  const errno=getCookieValue("errno");
+  if(errno==="10003"){setCookie("isLogin",false)}
+
   const isLogin=getCookieValue("isLogin");
-  
   //如果你是登录状态，想访问哪个都可以，直接next()
   //如果你不是登录状态，并且，不是去直接访问"Login"页面 
   //（是直接访问，就直接 next()正常，并且也不是直接访问 "Register"，我就让你 跳转访问 Login ）
@@ -96,6 +109,7 @@ router.beforeEach((to,from,next)=>{
   }else{
     next();
   }
+
 });
 
 

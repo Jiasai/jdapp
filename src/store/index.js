@@ -37,6 +37,15 @@ export default createStore({
       //   "shopName": "沃尔玛",
       //   "shopImg": "http://www.dell-lee.com/imgs/vue3/near.png"
       // }
+    },
+    bodyData:{
+      city:"",
+      department:"",
+      houseNumber:"",
+      name:"",
+      phone:"",
+      defaultAddress:false,
+	  addressId:''
     }
   },
   mutations: {
@@ -52,6 +61,10 @@ export default createStore({
     setStateData(state, payload) {//从本地获得数据修改
       const {keyName,data} = payload;
       state[keyName] = JSON.parse(data);
+    },
+    //修改address数据
+    setAddressData(state, payload){	
+      state.bodyData=payload  
     }
   },
   actions: {
@@ -90,6 +103,12 @@ export default createStore({
     //存储店铺信息
     setShopInfo(store, payload){
       setShopInfoEffect(store, payload);
+    },
+
+    //修改address数据
+    setAddressData(store, payload){
+		
+      store.commit("setAddressData", payload);
     }
 
   },

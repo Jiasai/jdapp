@@ -30,7 +30,7 @@ import { reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { post } from "../../utils/request";
 import axios from 'axios';
-import {setCookie} from "../../utils/cookie.js";
+import {setCookie,removeCookie} from "../../utils/cookie.js";
 import Toast, { useToastEffect } from "../../components/toast/Toast";
 
 //判断是否发送请求
@@ -60,7 +60,7 @@ const useLoginEffect = showToast => {
       }); */
 	  
 	  //本地nodejs自建服务端 localhost:3000
-	  const url = 'http://localhost:3000/api/user/login';
+	  const url = '/api/user/login';
 	  const result = await post(url,{username,password},{withCredentials:true});
 	      
       if (result?.errno === 0) {
@@ -69,12 +69,12 @@ const useLoginEffect = showToast => {
 		 //cookie失效，重新登录，触发服务器重新设置返回cookie
 		 
 		setCookie("isLogin",true,{maxAge:15*24*60*60})////有效期15天,maxAge单位：秒
-		//console.log(getCookieValue("isLogin"));
+    removeCookie("errno") //删除errno
 
         showToast("登录成功",'success');
         setTimeout(()=>{
           router.push({ name: "Home" });
-        },1600);   
+        },1200);   
 
       } else {
 		const message = result.message || "登录失败";
@@ -139,7 +139,7 @@ export default {
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 0.12rem;
     height: 0.96rem;
-    margin: 0 0.8rem 0.32rem;
+    margin: 0 0.8rem 0.42rem;
     &__content {
       width: 100%;
       height: 100%;

@@ -7,16 +7,20 @@
     />
     <div :class="{ top__title: true, titleWhite: whiteColor ? true : false }">
       {{ pageTitle }}
+      <div class="top__button" v-if="buttonText">
+        <button-right :text="buttonText" :pageTitle="pageTitle" :okClick="okClick"/>
+      </div>
     </div>
   </div>
 </template>
 <script>
 //获取组件
 import BackButton from "../../components/Back";
+import ButtonRight from "./ButtonRight.vue";
 export default {
   name: "TopTitle",
-  props: ["whiteColor", "pageTitle", "backHide"],
-  components: { BackButton }
+  props: ["whiteColor", "pageTitle", "backHide", "buttonText","okClick"],
+  components: { BackButton,ButtonRight }
 };
 </script>
 <style lang="scss" scoped>
@@ -31,11 +35,20 @@ export default {
   padding: 0.2rem 0rem $layout-margin-bottom;
   &__title {
     flex: 1;
+    flex: 1;
     height: 0.7rem;
     line-height: 0.7rem;
-
     font-size: 0.32rem;
     text-align: center;
+    position: relative;
+    .top__button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 0.7rem;
+      line-height: 0.7rem;
+      font-size: 0.28rem;
+    }
   }
   .titleWhite {
     color: #fff;
