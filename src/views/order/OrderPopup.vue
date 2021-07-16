@@ -22,7 +22,7 @@ import {
 import Toast, { useToastEffect } from "../../components/toast/Toast";
 
 //点击创建订单逻辑
-const useSubmitOrderEffect=(shopId,ShopInfos,cartProductList,clearCart,showToast)=>{
+const useSubmitOrderEffect=(shopId,ShopInfos,cartProductList,clearCart,showToast,addressId)=>{
     const router =  useRouter();
     const showmask=ref(true);
     const handleSubmitOrder=async(isCanceled)=>{
@@ -35,7 +35,7 @@ const useSubmitOrderEffect=(shopId,ShopInfos,cartProductList,clearCart,showToast
         }
         try{
             const result = await post('/api/order',{
-                addressId:"60ebe08736774544a4bf0071",
+                addressId,
                 shopId,
                 shopName:ShopInfos.shopName,
                 isCanceled,
@@ -70,9 +70,9 @@ const useSubmitOrderEffect=(shopId,ShopInfos,cartProductList,clearCart,showToast
 
 export default {
     name:'OrderPopup',
-    props:['closeMask'],
+    props:['closeMask','addressId'],
     components:{Toast},
-    setup(){
+    setup(props){
         
     const { shopId, cartList,clearCart} = useCommonCartEffect();
 
@@ -81,7 +81,7 @@ cartList);
 
     const { show, toastMessage, showToast,iconstate,showIcon} = useToastEffect();
 
-    const  {handleSubmitOrder,showmask} = useSubmitOrderEffect(shopId,ShopInfos.value,cartProductList.value,clearCart,showToast);
+    const  {handleSubmitOrder,showmask} = useSubmitOrderEffect(shopId,ShopInfos.value,cartProductList.value,clearCart,showToast,props.addressId);
 
     
 

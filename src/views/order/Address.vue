@@ -1,11 +1,14 @@
 <template>
-    <div class="address">
+    <div class="address"  @click="handlePushTo">
       <div class="address__left">
-        <div class="address__title">收货地址</div>
-        <p class="address__content">北京理工大学国防科技园2号楼10层</p>
-        <p class="address__text">
-          <span class="address__textP__name">瑶妹（先生）</span
-          ><span class="address__text__phone">18911024266</span>
+        <div class="address__title">默认收货地址</div>
+        <p class="address__text" v-if="!address?.city" style="color:#d60a0a">暂无地址，去新建地址
+        </p>
+        <p class="address__content" v-if="address?.city">{{`${address.city}${address.department}${address.houseNumber}`}}
+        </p>
+        <p class="address__text"  v-if="address?.city">
+          <span class="address__text__name">{{address.name}}</span
+          ><span class="address__text__phone">{{address.phone}}</span>         
         </p>
       </div>
       <div class="address__right">
@@ -15,8 +18,10 @@
 </template>
 
 <script>
+
 export default {
-    name:'Address'
+    name:'Address',
+    props:["address","handlePushTo"]
 }
 </script>
 <style lang="scss" scoped>
@@ -51,6 +56,7 @@ export default {
     line-height: 1.4;
   }
   &__text {
+    &__name{margin-right:.4rem}
     font-size: 0.24rem;
     color: $content-fontColor-grey;
   }

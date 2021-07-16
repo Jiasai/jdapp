@@ -1,17 +1,24 @@
 <template>
     <top-title :whiteColor="true" pageTitle="确认订单" />
   <div class="main">
-    <Address />
+    <Address :address="address" :handlePushTo="handlePushTo" />
     <shop-cart :shopId="shopId" />
   </div>
-  <order-popup v-if="showMask" :closeMask="handleShowMask" />
+  <order-popup v-if="showMask" :closeMask="handleShowMask" :addressId="addressId" />
 
   <div class="shopBootomBar">
     <div class="shopBootomBar__cartTotal">
       实付金额：<span><i>&yen;</i>{{ calculations.price }}</span>
     </div>
+        <div
+      class="shopBootomBar__orderButton nullClick"
+      v-if="!address?.city"
+    >
+      提交订单
+    </div>
     <div
       class="shopBootomBar__orderButton"
+      v-if="address?.city"
       @click="() => handleShowMask()"
     >
       提交订单
@@ -22,6 +29,8 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
+
 import {ref} from 'vue';
 import {
   useLocalStorageEffect,
@@ -34,6 +43,30 @@ import ShopCart from "../../components/shopcart/ShopCart.vue";
 import Address from './Address.vue';
 import OrderPopup from './OrderPopup.vue';
 
+//默认地址相关
+import {get} from '../../utils/request';
+const useAddressEffect=()=>{
+  const router = useRouter();
+    const address = ref({});
+    const addressId = ref('')
+    const getAddressList= async()=>{
+      try{
+        const result= await get('/api/user/address');      
+        if (result?.errno === 0&&result?.data?.length>=1) {
+          for (const addressItem of result.data) {
+              if(addressItem?.defaultAddress){
+                address.value = addressItem;
+                addressId.value = addressItem._id;
+              }
+          }                     
+        }
+      }catch(err){console.log(err)}
+    }
+    const handlePushTo = () =>{
+      router.push(`/address`);
+    }
+    return {address,getAddressList,handlePushTo,addressId}
+}
 
 //展示隐藏弹窗相关逻辑
 const useShowMaskEffect=()=>{
@@ -56,7 +89,11 @@ export default {
 
     const {showMask,handleShowMask}=useShowMaskEffect();
 
-    return { shopId, cartList, calculations,showMask,handleShowMask};
+    //获取默认地址
+    const {address,getAddressList,handlePushTo,addressId}= useAddressEffect()
+    getAddressList();
+
+    return { shopId, cartList, calculations,showMask,handleShowMask,address,handlePushTo,addressId};
   }
 };
 </script>
@@ -99,6 +136,9 @@ export default {
     text-align: center;
     line-height: 0.96rem;
     position: relative;
+    &.nullClick{
+      opacity:.45;      
+    }
     &__a {
       display: block;
       width: 100%;
