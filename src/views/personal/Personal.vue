@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="menu">
-            <div class="menu__item">
+<!--             <div class="menu__item">
                 <div class="menu__item__left">
                 <div class="menu__item__img">
                     <img src="../../assets/images/personal_03.jpg" alt=""></div>
@@ -29,7 +29,7 @@
                 <div class="menu__item__ico">
                     <span class="iconfont icon-fanhui1"></span>
                 </div>
-            </div>
+            </div> -->
             <router-link to="/address">
             <div class="menu__item">
                   <div class="menu__item__left">
@@ -43,12 +43,12 @@
                 </div>
             </div>
             </router-link>
-            <div class="menu__item">
+            <div class="menu__item" @click="logoutToggle">
                  <div class="menu__item__left">
                 <div class="menu__item__img">
-                    <img src="../../assets/images/personal_08.jpg" alt="">
+                    <img src="../../assets/images/personal_09.jpg" alt="">
                 </div>
-                <p class="menu__item__title">客服与帮助</p>
+                <p class="menu__item__title">退出登录</p>
                  </div>
                 <div class="menu__item__ico">
                     <span class="iconfont icon-fanhui1"></span>
@@ -58,15 +58,50 @@
     </div>
   <tab-bar />
   <div class="pagetopBg"></div>
+  <div class="logout" v-if="isLogout">
+        <div class="logout_text">退出后将不能访问个人主页，<br/>确定退出吗？</div>
+        <div class="logout_button">
+            <div class="logout_button_box" @click="logoutToggle">取消</div>
+            <div class="logout_button_box" @click="handleLogout">确定</div>
+        </div>
+  </div>
+  <div class="logout_bg" v-if="isLogout" @click="logoutToggle"></div>
 </template>
 <script>
+import { useRouter } from "vue-router";
+import { get } from "../../utils/request";
+import {getCookieValue,setCookie} from "../../utils/cookie.js";
 import TabBar from '../../components/tabBar/tabBar';
+import {ref} from 'vue';
+
+const useLogoutEffect=()=>{
+    const router = useRouter();
+    const isLogout = ref(false);
+
+    const logoutToggle = ()=>{
+        isLogout.value = !isLogout.value 
+    }
+
+    const handleLogout = async() =>{
+        const url = "/api/user/logout";
+        const result = await get(url);      
+        if(result?.errno===10003){
+            isLogout.value = !isLogout.value
+            setTimeout(()=>{
+                    router.push({name:'Login'});
+              },400);              
+        }
+    }
+
+    return {isLogout,logoutToggle,handleLogout}
+}
 
 export default {
     name:'Cart',
     components:{TabBar},
     setup(props){
-        
+        const {isLogout,logoutToggle,handleLogout} = useLogoutEffect();
+        return {isLogout,logoutToggle,handleLogout}
     }
 }
 </script>
@@ -170,5 +205,37 @@ border-bottom-right-radius:15%;
   right: 0;
   z-index: 1;
 }
-
+.logout{
+    position:absolute;
+    z-index:101;
+    background:#fff;
+    border-radius:.06rem;
+    left:11%;
+    right:11%;
+    top:50%;
+    transform: translate(0%, -50%);
+    padding:.5rem .3rem 0.2rem .5rem ;
+    font-size:.32rem;
+    line-height:1.6;
+    font-weight:bold;
+    &_button{
+        display:flex;
+        float:right;
+        
+        font-size:.28rem;
+        color:$blueColor;
+        &_box{
+            padding:0.25rem .25rem 0.25rem;
+        }
+    }
+    &_bg{
+        position:absolute;
+        background:rgba(0,0,0,.65);
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
+        z-index:100;
+    }
+}
 </style>

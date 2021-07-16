@@ -13,7 +13,7 @@ const instance = axios.create({
 export const get = (url, params = {},) => {
     return new Promise((resolve, reject) => {
         instance.get(url, { params }).then((response) => {
-            if(response.data?.errno === 10003){setCookie("errno","10003")} //设置10003用户校验失败
+            if(response.data?.errno === 10003){setCookie("errno","10003");setCookie("isLogin",false)} //设置10003用户校验失败
             resolve(response.data);
         }, err => {
             reject(err);
@@ -29,7 +29,7 @@ export const post = (url, data = {}) => {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(response.data?.errno === 10003){setCookie("errno","10003")} //设置10003用户校验失败
+            if(response.data?.errno === 10003){setCookie("errno","10003");setCookie("isLogin",false)} //设置10003用户校验失败
             resolve(response.data);
         }, err => {
             reject(err);
@@ -43,7 +43,7 @@ export const patch = (url, data = {}) => {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(response.data?.errno === 10003){setCookie("errno","10003")} //设置10003用户校验失败
+            if(response.data?.errno === 10003){setCookie("errno","10003");setCookie("isLogin",false)} //设置10003用户校验失败
             resolve(response.data);
         }, err => {
             reject(err);

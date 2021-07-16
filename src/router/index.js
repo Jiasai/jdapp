@@ -96,10 +96,7 @@ const router = createRouter({
 
 //任何路由跳转前，都会执行 beforeEach()
 router.beforeEach((to,from,next)=>{
-
-  const errno=getCookieValue("errno");
-  if(errno==="10003"){setCookie("isLogin",false)}
-
+  
   const isLogin=getCookieValue("isLogin");
   //如果你是登录状态，想访问哪个都可以，直接next()
   //如果你不是登录状态，并且，不是去直接访问"Login"页面 
