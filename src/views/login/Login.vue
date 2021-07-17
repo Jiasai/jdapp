@@ -26,7 +26,7 @@
 
 <script>
 //主动跳转，用useRouter的 push方法
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs  } from "vue";
 import { useRouter } from "vue-router";
 import { post } from "../../utils/request";
 import axios from 'axios';
@@ -104,6 +104,11 @@ export default {
     const { show, toastMessage, showToast,iconstate,showIcon} = useToastEffect();
     const { handleLogin, username, password } = useLoginEffect(showToast);
     const { handleToRegister } = useToRegisterEffect();
+/*     watchEffect(()=>{
+        //首次渲染展示就执行内部所有代码，自动侦听到外部依赖变化，也执行
+        console.log("username输入发生变化，watchEffect执行了")
+        console.log(username.value) 
+    }) */
 
     return {
       handleLogin,

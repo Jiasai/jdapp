@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref} from "vue";
 import { get, setStorage, getStorage } from "../../utils/request";
 import Shopinfo from "../../components/shoinfo/Shopinfo";
 const useGetDataEffect = () => {
@@ -49,7 +49,6 @@ export default {
   setup() {
     const { nearByList, getNearbyList } = useGetDataEffect();
     getNearbyList();
-
     return { nearByList };
   }
 };

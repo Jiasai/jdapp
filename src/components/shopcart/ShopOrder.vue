@@ -98,7 +98,7 @@ export default {
     }
   }
   &__right{
-    width:1.2rem;
+    width:1.4rem;
     height: .7rem;
     display: flex;
     flex-direction: column;
