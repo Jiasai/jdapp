@@ -25,7 +25,7 @@
         components: { Slider,TabBar,Position,Search,NavMenu,Nearby},
         name: "Home",
         setup() {
-          const searchPlaceHolder=ref('山姆会员商店优惠商品');       
+          const searchPlaceHolder=ref('山姆会员商店优惠商品');     
           return {searchPlaceHolder};
         }
     };

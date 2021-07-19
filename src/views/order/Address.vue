@@ -2,7 +2,7 @@
     <div class="address"  @click="handlePushTo">
       <div class="address__left">
         <div class="address__title">默认收货地址</div>
-        <p class="address__text" v-if="!address?.city" style="color:#d60a0a">暂无地址，去新建地址
+        <p class="address__text" v-if="!address?.city" style="color:#d60a0a">暂无默认地址，去选择添加
         </p>
         <p class="address__content" v-if="address?.city">{{`${address.city}${address.department}${address.houseNumber}`}}
         </p>

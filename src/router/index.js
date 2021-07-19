@@ -8,6 +8,7 @@ const routes = [
     component:()=>import(/* webpackChunkName: "home" */'../views/home/Home'),
     beforeEnter(to,from,next){
       localStorage.pathName=to.name;next();
+      document.title="仿京东到家app"
     }
   },
   {
@@ -18,7 +19,8 @@ const routes = [
       //只有访问Login页面之前执行
       //next意思是只有调用我，逻辑才往下执行
       const isLogin = getCookieValue("isLogin");
-      isLogin?next({name:'Home'}):next()     
+      isLogin?next({name:'Home'}):next() 
+      document.title="仿京东到家app"    
     }
   },
   {
@@ -41,6 +43,7 @@ const routes = [
     component:()=>import(/* webpackChunkName: "cart" */'../views/cart/Cart'),
     beforeEnter(to,from,next){
       localStorage.pathName=to.name;next();
+      document.title="购物车"     
     }
   },
   {
@@ -49,6 +52,7 @@ const routes = [
     component:()=>import(/* webpackChunkName: "order" */'../views/order/Order'),
     beforeEnter(to,from,next){
       localStorage.pathName=to.name;next();
+      document.title="我的订单"
     }
   },
   {
@@ -70,6 +74,7 @@ const routes = [
     component:()=>import(/* webpackChunkName: "personal" */'../views/personal/Personal'),
     beforeEnter(to,from,next){
       localStorage.pathName=to.name;next();
+      document.title="个人中心"
     }
   },
   {
