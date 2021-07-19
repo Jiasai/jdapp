@@ -3,7 +3,7 @@ import {setCookie} from "./cookie";
 
 const instance = axios.create({
     //baseURL: 'https://www.fastmock.site/mock/634b1071782bcbcd764f06074951b060/jd',
-	baseURL: '',	
+	baseURL: 'http://localhost:3000',	
 	withCredentials:true, //允许跨域传递cookie
     //https://www.fastmock.site/mock/ae8e9031947a302fed5f92425995aa19/jd
     timeout:10000
@@ -13,7 +13,7 @@ const instance = axios.create({
 export const get = (url, params = {},) => {
     return new Promise((resolve, reject) => {
         instance.get(url, { params }).then((response) => {
-            if(response.data?.errno === 10003){setCookie("errno","10003");setCookie("isLogin",false)} //设置10003用户校验失败
+            if(response.data?.errno === 10003){setCookie("isLogin",false)} //用户校验失败,cookie设置false
             resolve(response.data);
         }, err => {
             reject(err);
@@ -29,7 +29,7 @@ export const post = (url, data = {}) => {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(response.data?.errno === 10003){setCookie("errno","10003");setCookie("isLogin",false)} //设置10003用户校验失败
+            if(response.data?.errno === 10003){setCookie("isLogin",false)} //用户校验失败,cookie设置false
             resolve(response.data);
         }, err => {
             reject(err);
@@ -43,7 +43,7 @@ export const patch = (url, data = {}) => {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(response.data?.errno === 10003){setCookie("errno","10003");setCookie("isLogin",false)} //设置10003用户校验失败
+            if(response.data?.errno === 10003){setCookie("isLogin",false)} //用户校验失败,cookie设置false
             resolve(response.data);
         }, err => {
             reject(err);

@@ -59,7 +59,7 @@
   <tab-bar />
   <div class="pagetopBg"></div>
   <div class="logout" v-if="isLogout">
-        <div class="logout_text">退出后将不能访问个人主页，<br/>确定退出吗？</div>
+        <div class="logout_text">退出后将清空购物车本地数据，<br/>确定退出吗？</div>
         <div class="logout_button">
             <div class="logout_button_box" @click="logoutToggle">取消</div>
             <div class="logout_button_box" @click="handleLogout">确定</div>
@@ -84,7 +84,15 @@ const useLogoutEffect=()=>{
 
     const handleLogout = async() =>{
         const url = "/api/user/logout";
-        const result = await get(url);      
+        const result = await get(url); 
+        //清空本地存储
+        localStorage.clear();
+        const cookies = document.cookie.match(/[^ =;]+(?=\=)/g);
+        if(cookies){
+             for (let i = cookies.length; i--;) {
+                document.cookie = cookies[i] + '=0;path=/;expires=' + new Date(0).toUTCString();//清除当前域名下的cookie
+            }
+        }
         if(result?.errno===10003){
             isLogout.value = !isLogout.value
             setTimeout(()=>{
