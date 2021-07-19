@@ -140,6 +140,7 @@ export default {
     }
   }
   &__input {
+  
     background: #f9f9f9;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 0.12rem;
