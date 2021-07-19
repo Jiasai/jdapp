@@ -2,7 +2,7 @@
    <div>Hello,world</div>
     <p>This is Vue</p>
    <router-link :to ="`/user/${username}`"  v-if="isUser">           <!--链接跳转-->
-        去主页链接
+        去主页的链接
    </router-link>                                                                    <!--dom中的文本是变量的话，放在 {{ }} 中-->
    <h1 :class="{active: isActive?true:false}">{{ pageTitle }}</h1>  <!--js语法和使用变量写在“ ”中,同时加 ： 或 v-bind: 指令-->
    <input v-model="username">                                     <!--通过v-module双向绑定指令，input实时value值-->
